@@ -71,7 +71,6 @@ export class Animation {
     }
 
     nextAnimationFrame(gameTime: number) {
-
         const animationImages = this.getImages();
 
         this.animationFrameTime = gameTime;

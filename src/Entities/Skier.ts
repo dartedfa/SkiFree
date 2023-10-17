@@ -46,6 +46,17 @@ const DIRECTION_IMAGES: { [key: number]: IMAGE_NAMES } = {
     [DIRECTION_RIGHT]: IMAGE_NAMES.SKIER_RIGHT,
 };
 
+/**
+ * A sequence of images that comprises the animation for the skier.
+ */
+const IMAGES_JUMPING: IMAGE_NAMES[] = [
+    IMAGE_NAMES.SKIER_JUMP1,
+    IMAGE_NAMES.SKIER_JUMP2,
+    IMAGE_NAMES.SKIER_JUMP3,
+    IMAGE_NAMES.SKIER_JUMP4,
+    IMAGE_NAMES.SKIER_JUMP5,
+];
+
 export class Skier extends Entity {
     /**
      * The name of the current image being displayed for the skier.

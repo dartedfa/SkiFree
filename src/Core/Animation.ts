@@ -43,14 +43,14 @@ export class Animation {
         this.getCurrentImage = getCurrentImage
     }
 
-    animate(gameTime: number) {
-        if (gameTime - this.animationFrameTime > ANIMATION_FRAME_SPEED_MS) {
-            this.nextAnimationFrame(gameTime);
+    animate(animationCalledTime: number) {
+        if (animationCalledTime - this.animationFrameTime > ANIMATION_FRAME_SPEED_MS) {
+            this.nextAnimationFrame(animationCalledTime);
         }
     }
 
     finishAnimation() {
-        this.currentAnimationFrame = 0;
+        this.currentAnimationFrame = 0
         const animationCallback = this.getCallback();
 
         if (animationCallback) {
@@ -70,10 +70,10 @@ export class Animation {
         return this.callback;
     }
 
-    nextAnimationFrame(gameTime: number) {
+    nextAnimationFrame(animationCalledTime: number) {
         const animationImages = this.getImages();
 
-        this.animationFrameTime = gameTime;
+        this.animationFrameTime = animationCalledTime;
         this.currentAnimationFrame++;
         if (this.currentAnimationFrame >= animationImages.length) {
             if (!this.getLooping()) {
@@ -85,5 +85,9 @@ export class Animation {
         }
 
         this.getCurrentImage(animationImages[this.currentAnimationFrame])
+    }
+
+    reset() {
+        this.currentAnimationFrame = 0
     }
 }

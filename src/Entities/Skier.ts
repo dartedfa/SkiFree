@@ -3,7 +3,7 @@
  * angles, and crashes into obstacles they run into. If caught by the rhino, the skier will get eaten and die.
  */
 
-import { IMAGE_NAMES, DIAGONAL_SPEED_REDUCER, KEYS } from "../Constants";
+import { DIAGONAL_SPEED_REDUCER, IMAGE_NAMES, KEYS } from "../Constants";
 import { Entity } from "./Entity";
 import { Canvas } from "../Core/Canvas";
 import { ImageManager } from "../Core/ImageManager";
@@ -153,7 +153,7 @@ export class Skier extends Entity {
     update(gameTime: number) {
         if (this.isMoving()) {
             this.move();
-            this.checkIfHitObstacle();
+            this.checkIntersection();
             this.isJumping() && this.jumpAnimation.startAnimation(gameTime)
         }
     }
@@ -375,16 +375,31 @@ export class Skier extends Entity {
         );
     }
 
+    intersectionAction(obstacle: Obstacle) {
+        const obstacleName = obstacle.imageName
+        switch (obstacleName) {
+            case IMAGE_NAMES.JUMP_RAMP:
+                this.jump()
+                break;
+            case IMAGE_NAMES.ROCK1:
+            case IMAGE_NAMES.ROCK2:
+                !this.isJumping() && this.crash()
+                break
+            default:
+                this.crash()
+        }
+    }
+
     /**
      * Go through all the obstacles in the game and see if the skier collides with any of them. If so, crash the skier.
      */
-    checkIfHitObstacle() {
+    checkIntersection() {
         const skierBounds = this.getBounds();
         if (!skierBounds) {
             return;
         }
 
-        const collision = this.obstacleManager.getObstacles().find((obstacle: Obstacle): boolean => {
+        const collidedObstacle = this.obstacleManager.getObstacles().find((obstacle: Obstacle): boolean => {
             const obstacleBounds = obstacle.getBounds();
             if (!obstacleBounds) {
                 return false;
@@ -393,8 +408,8 @@ export class Skier extends Entity {
             return intersectTwoRects(skierBounds, obstacleBounds);
         });
 
-        if (collision) {
-            this.crash();
+        if (collidedObstacle) {
+            this.intersectionAction(collidedObstacle)
         }
     }
 

@@ -22,6 +22,7 @@ const STARTING_SPEED: number = 10;
 
 enum STATES {
     STATE_SKIING = "skiing",
+    STATE_JUMPING = "jumping",
     STATE_CRASHED = "crashed",
     STATE_DEAD = "dead",
 }
@@ -241,6 +242,8 @@ export class Skier extends Entity {
                 break;
             case KEYS.DOWN:
                 this.turnDown();
+                break;
+            case KEYS.SPACEBAR:
                 break;
             default:
                 handled = false;

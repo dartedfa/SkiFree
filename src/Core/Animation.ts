@@ -50,7 +50,6 @@ export class Animation {
     }
 
     finishAnimation() {
-        this.currentAnimationFrame = 0
         const animationCallback = this.getCallback();
 
         if (animationCallback) {
@@ -76,12 +75,11 @@ export class Animation {
         this.animationFrameTime = animationCalledTime;
         this.currentAnimationFrame++;
         if (this.currentAnimationFrame >= animationImages.length) {
+            this.currentAnimationFrame = 0;
             if (!this.getLooping()) {
                 this.finishAnimation();
                 return;
             }
-
-            this.currentAnimationFrame = 0;
         }
 
         this.getCurrentImage(animationImages[this.currentAnimationFrame])

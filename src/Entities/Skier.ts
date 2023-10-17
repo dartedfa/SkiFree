@@ -399,7 +399,7 @@ export class Skier extends Entity {
             return;
         }
 
-        const collidedObstacle = this.obstacleManager.getObstacles().find((obstacle: Obstacle): boolean => {
+        const intersectedObstacle = this.obstacleManager.getObstacles().find((obstacle: Obstacle): boolean => {
             const obstacleBounds = obstacle.getBounds();
             if (!obstacleBounds) {
                 return false;
@@ -408,8 +408,8 @@ export class Skier extends Entity {
             return intersectTwoRects(skierBounds, obstacleBounds);
         });
 
-        if (collidedObstacle) {
-            this.intersectionAction(collidedObstacle)
+        if (intersectedObstacle) {
+            this.intersectionAction(intersectedObstacle)
         }
     }
 

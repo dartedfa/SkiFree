@@ -243,7 +243,7 @@ export class Skier extends Entity {
      * Jump the skier at the speed they're traveling.
      */
     jump() {
-        if (this.isCrashed()) {
+        if (this.isCrashed() || this.isJumping()) {
             return
         }
         this.state = STATES.STATE_JUMPING;
@@ -395,6 +395,7 @@ export class Skier extends Entity {
      * image.
      */
     crash() {
+        this.isJumping() && this.jumpAnimation.reset()
         this.state = STATES.STATE_CRASHED;
         this.speed = 0;
         this.imageName = IMAGE_NAMES.SKIER_CRASH;

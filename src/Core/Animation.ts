@@ -43,9 +43,9 @@ export class Animation {
         this.getCurrentImage = getCurrentImage
     }
 
-    animate(animationCalledTime: number) {
-        if (animationCalledTime - this.animationFrameTime > ANIMATION_FRAME_SPEED_MS) {
-            this.nextAnimationFrame(animationCalledTime);
+    startAnimation(gameTime: number) {
+        if (gameTime - this.animationFrameTime > ANIMATION_FRAME_SPEED_MS) {
+            this.nextAnimationFrame(gameTime);
         }
     }
 
@@ -69,10 +69,10 @@ export class Animation {
         return this.callback;
     }
 
-    nextAnimationFrame(animationCalledTime: number) {
+    nextAnimationFrame(gameTime: number) {
         const animationImages = this.getImages();
 
-        this.animationFrameTime = animationCalledTime;
+        this.animationFrameTime = gameTime;
         this.currentAnimationFrame++;
         if (this.currentAnimationFrame >= animationImages.length) {
             this.currentAnimationFrame = 0;

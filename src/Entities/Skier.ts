@@ -240,10 +240,18 @@ export class Skier extends Entity {
     }
 
     /**
+     * Avoid Jumping if Skier is: Jumping, Standing, Crashed.
+     */
+    canNotJump() {
+        return this.isJumping() || [DIRECTION_LEFT, DIRECTION_RIGHT].includes(this.direction)
+            || this.isCrashed();
+    }
+
+    /**
      * Jump the skier at the speed they're traveling.
      */
     jump() {
-        if (this.isCrashed() || this.isJumping()) {
+        if (this.canNotJump()) {
             return
         }
         this.state = STATES.STATE_JUMPING;
@@ -261,7 +269,7 @@ export class Skier extends Entity {
      * Handle keyboard input. If the skier is dead, don't handle any input.
      */
     handleInput(inputKey: string) {
-        if (this.isDead()) {
+        if (this.isDead() || this.isJumping()) {
             return false;
         }
 

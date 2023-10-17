@@ -10,6 +10,7 @@ import { ImageManager } from "../Core/ImageManager";
 import { intersectTwoRects, Rect } from "../Core/Utils";
 import { ObstacleManager } from "./Obstacles/ObstacleManager";
 import { Obstacle } from "./Obstacles/Obstacle";
+import { Animation } from "../Core/Animation";
 
 /**
  * The skier starts running at this speed. Saved in case speed needs to be reset at any point.
@@ -84,6 +85,8 @@ export class Skier extends Entity {
      */
     obstacleManager: ObstacleManager;
 
+    jumpAnimation = new Animation(IMAGES_JUMPING, false, this.setImageName.bind(this), this.land.bind(this))
+
     /**
      * Init the skier.
      */
@@ -107,11 +110,26 @@ export class Skier extends Entity {
         return this.state === STATES.STATE_SKIING;
     }
 
+    isMoving(): boolean {
+        return [STATES.STATE_SKIING, STATES.STATE_JUMPING].includes(this.state);
+    }
+
+    isJumping(): boolean {
+        return this.state === STATES.STATE_JUMPING;
+    }
+
     /**
      * Is the skier currently in the dead state
      */
     isDead(): boolean {
         return this.state === STATES.STATE_DEAD;
+    }
+
+    /**
+     * Set the skier's image based upon the direction they're facing.
+     */
+    setImageName(imageName: IMAGE_NAMES) {
+        this.imageName = imageName
     }
 
     /**
@@ -132,10 +150,11 @@ export class Skier extends Entity {
     /**
      * Move the skier and check to see if they've hit an obstacle. The skier only moves in the skiing state.
      */
-    update() {
-        if (this.isSkiing()) {
+    update(gameTime: number) {
+        if (this.isMoving()) {
             this.move();
             this.checkIfHitObstacle();
+            this.isJumping() && this.jumpAnimation.animate(gameTime)
         }
     }
 
@@ -221,6 +240,24 @@ export class Skier extends Entity {
     }
 
     /**
+     * Jump the skier at the speed they're traveling.
+     */
+    jump() {
+        if (this.isCrashed()) {
+            return
+        }
+        this.state = STATES.STATE_JUMPING;
+    }
+
+    /**
+     * Land the skier down with last direction.
+     */
+    land() {
+        this.state = STATES.STATE_SKIING
+        this.setDirectionalImage()
+    }
+
+    /**
      * Handle keyboard input. If the skier is dead, don't handle any input.
      */
     handleInput(inputKey: string) {
@@ -244,6 +281,7 @@ export class Skier extends Entity {
                 this.turnDown();
                 break;
             case KEYS.SPACEBAR:
+                this.jump()
                 break;
             default:
                 handled = false;

@@ -154,7 +154,7 @@ export class Skier extends Entity {
         if (this.isMoving()) {
             this.move();
             this.checkIfHitObstacle();
-            this.isJumping() && this.jumpAnimation.animate(gameTime)
+            this.isJumping() && this.jumpAnimation.startAnimation(gameTime)
         }
     }
 

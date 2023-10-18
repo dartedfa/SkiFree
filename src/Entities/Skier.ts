@@ -31,16 +31,16 @@ enum STATES {
 /**
  * The different directions the skier can be facing.
  */
-const DIRECTION_LEFT: number = 0;
-const DIRECTION_LEFT_DOWN: number = 1;
-const DIRECTION_DOWN: number = 2;
-const DIRECTION_RIGHT_DOWN: number = 3;
-const DIRECTION_RIGHT: number = 4;
+export const DIRECTION_LEFT: number = 0;
+export const DIRECTION_LEFT_DOWN: number = 1;
+export const DIRECTION_DOWN: number = 2;
+export const DIRECTION_RIGHT_DOWN: number = 3;
+export const DIRECTION_RIGHT: number = 4;
 
 /**
  * Mapping of the image to display for the skier based upon which direction they're facing.
  */
-const DIRECTION_IMAGES: { [key: number]: IMAGE_NAMES } = {
+export const DIRECTION_IMAGES: { [key: number]: IMAGE_NAMES } = {
     [DIRECTION_LEFT]: IMAGE_NAMES.SKIER_LEFT,
     [DIRECTION_LEFT_DOWN]: IMAGE_NAMES.SKIER_LEFTDOWN,
     [DIRECTION_DOWN]: IMAGE_NAMES.SKIER_DOWN,
@@ -154,7 +154,7 @@ export class Skier extends Entity {
         if (this.isMoving()) {
             this.move();
             this.checkIntersection();
-            this.isJumping() && this.jumpAnimation.startAnimation(gameTime)
+            this.isJumping() && this.jumpAnimation.animate(gameTime)
         }
     }
 

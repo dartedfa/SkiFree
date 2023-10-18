@@ -43,7 +43,7 @@ export class Animation {
         this.getCurrentImage = getCurrentImage
     }
 
-    startAnimation(gameTime: number) {
+    animate(gameTime: number) {
         if (gameTime - this.animationFrameTime > ANIMATION_FRAME_SPEED_MS) {
             this.nextAnimationFrame(gameTime);
         }
@@ -74,7 +74,6 @@ export class Animation {
         const animationImages = this.getImages();
 
         this.animationFrameTime = gameTime;
-        this.currentAnimationFrame++;
         if (this.currentAnimationFrame >= animationImages.length) {
             if (!this.getLooping()) {
                 this.finishAnimation();
@@ -83,8 +82,8 @@ export class Animation {
 
             this.currentAnimationFrame = 0;
         }
-
         this.getCurrentImage(animationImages[this.currentAnimationFrame])
+        this.currentAnimationFrame++;
     }
 
     reset() {

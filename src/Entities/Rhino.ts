@@ -106,7 +106,7 @@ export class Rhino extends Entity {
             this.checkIfCaughtTarget(target);
         }
 
-        this.curAnimation?.startAnimation(gameTime)
+        this.curAnimation?.animate(gameTime)
     }
 
     /**

@@ -251,7 +251,6 @@ export class Skier extends Entity {
      * Jump the skier at the speed they're traveling.
      */
     jump() {
-        console.log(this.isCrashed());
         if (this.canNotJump()) {
             return
         }

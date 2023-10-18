@@ -99,29 +99,22 @@ export class Skier extends Entity {
     /**
      * Is the skier currently in the crashed state
      */
-    isCrashed(): boolean {
+    get isCrashed(): boolean {
         return this.state === STATES.STATE_CRASHED;
     }
 
-    /**
-     * Is the skier currently in the skiing state
-     */
-    isSkiing(): boolean {
-        return this.state === STATES.STATE_SKIING;
-    }
-
-    isMoving(): boolean {
+    get isMoving(): boolean {
         return [STATES.STATE_SKIING, STATES.STATE_JUMPING].includes(this.state);
     }
 
-    isJumping(): boolean {
+    get isJumping(): boolean {
         return this.state === STATES.STATE_JUMPING;
     }
 
     /**
      * Is the skier currently in the dead state
      */
-    isDead(): boolean {
+    get isDead(): boolean {
         return this.state === STATES.STATE_DEAD;
     }
 
@@ -151,10 +144,10 @@ export class Skier extends Entity {
      * Move the skier and check to see if they've hit an obstacle. The skier only moves in the skiing state.
      */
     update(gameTime: number) {
-        if (this.isMoving()) {
+        if (this.isMoving) {
             this.move();
             this.checkIntersection();
-            this.isJumping() && this.jumpAnimation.animate(gameTime)
+            this.isJumping && this.jumpAnimation.animate(gameTime)
         }
     }
 
@@ -162,7 +155,7 @@ export class Skier extends Entity {
      * Draw the skier if they aren't dead
      */
     draw() {
-        if (this.isDead()) {
+        if (this.isDead) {
             return;
         }
 
@@ -243,8 +236,8 @@ export class Skier extends Entity {
      * Avoid Jumping if Skier is: Jumping, Standing, Crashed.
      */
     canNotJump() {
-        return this.isJumping() || [DIRECTION_LEFT, DIRECTION_RIGHT].includes(this.direction)
-            || this.isCrashed();
+        return this.isJumping || [DIRECTION_LEFT, DIRECTION_RIGHT].includes(this.direction)
+            || this.isCrashed;
     }
 
     /**
@@ -269,7 +262,7 @@ export class Skier extends Entity {
      * Handle keyboard input. If the skier is dead, don't handle any input.
      */
     handleInput(inputKey: string) {
-        if (this.isDead() || this.isJumping()) {
+        if (this.isDead || this.isJumping) {
             return false;
         }
 
@@ -303,7 +296,7 @@ export class Skier extends Entity {
      * one step left. If they're in the crashed state, then first recover them from the crash.
      */
     turnLeft() {
-        if (this.isCrashed()) {
+        if (this.isCrashed) {
             this.recoverFromCrash(DIRECTION_LEFT);
         }
 
@@ -319,7 +312,7 @@ export class Skier extends Entity {
      * one step right. If they're in the crashed state, then first recover them from the crash.
      */
     turnRight() {
-        if (this.isCrashed()) {
+        if (this.isCrashed) {
             this.recoverFromCrash(DIRECTION_RIGHT);
         }
 
@@ -335,7 +328,7 @@ export class Skier extends Entity {
      * If they're in the crashed state, do nothing as you can't move up if you're crashed.
      */
     turnUp() {
-        if (this.isCrashed()) {
+        if (this.isCrashed) {
             return;
         }
 
@@ -349,7 +342,7 @@ export class Skier extends Entity {
      * to escape an obstacle before skiing down again.
      */
     turnDown() {
-        if (this.isCrashed()) {
+        if (this.isCrashed) {
             return;
         }
 
@@ -383,7 +376,7 @@ export class Skier extends Entity {
                 break;
             case IMAGE_NAMES.ROCK1:
             case IMAGE_NAMES.ROCK2:
-                !this.isJumping() && this.crash()
+                !this.isJumping && this.crash()
                 break
             default:
                 this.crash()
@@ -418,7 +411,7 @@ export class Skier extends Entity {
      * image.
      */
     crash() {
-        this.isJumping() && this.jumpAnimation.reset()
+        this.isJumping && this.jumpAnimation.reset()
         this.state = STATES.STATE_CRASHED;
         this.speed = 0;
         this.imageName = IMAGE_NAMES.SKIER_CRASH;

@@ -19,12 +19,12 @@ export class Animation {
     /**
      * The current frame of the current animation the rhino is on.
      */
-    currentAnimationFrame: number = 0;
+    private currentAnimationFrame: number = 0;
 
     /**
      * The time in ms of the last frame change. Used to provide a consistent framerate.
      */
-    animationFrameTime: number = Date.now();
+    private animationFrameTime: number = Date.now();
 
     /**
      * Function to call when the animation is complete

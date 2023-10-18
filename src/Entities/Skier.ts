@@ -21,7 +21,7 @@ const STARTING_SPEED: number = 10;
  * The different states the skier can be in.
  */
 
-enum STATES {
+export enum STATES {
     STATE_SKIING = "skiing",
     STATE_JUMPING = "jumping",
     STATE_CRASHED = "crashed",
@@ -251,6 +251,7 @@ export class Skier extends Entity {
      * Jump the skier at the speed they're traveling.
      */
     jump() {
+        console.log(this.isCrashed());
         if (this.canNotJump()) {
             return
         }

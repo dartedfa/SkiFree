@@ -4,7 +4,7 @@ import { IMAGE_NAMES } from "../../Constants";
 const frameRate = 300
 
 describe('Animation', () => {
-    test('getter and callback functions.', () => {
+    it('should call getter function with imageName and call callback after finishing animation.', () => {
         const getter = jest.fn()
         const callback = jest.fn()
         const animation = new Animation([IMAGE_NAMES.SKIER_DOWN, IMAGE_NAMES.SKIER_LEFT], false, getter, callback)

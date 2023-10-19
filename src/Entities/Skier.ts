@@ -407,7 +407,7 @@ export class Skier extends Entity {
     }
 
     /**
-     * Go through all the obstacles and call intersectionAction with each obstacle.
+     * Go through all the obstacles and call intersectionAction with each intersected obstacle.
      */
     checkIntersection() {
         const skierBounds = this.getBounds();

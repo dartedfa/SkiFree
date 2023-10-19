@@ -17,7 +17,7 @@ export class Animation {
     private readonly looping: boolean;
 
     /**
-     * The current frame of the current animation the rhino is on.
+     * The current frame of an animation.
      */
     private currentAnimationFrame: number = 0;
 
@@ -32,7 +32,7 @@ export class Animation {
     private readonly callback?: Function;
 
     /**
-     * Function to be called when the current frame changes
+     * Function to be called when the frame changes, which returns image of animation.
      */
     private readonly getCurrentImage: Function;
 
@@ -43,15 +43,22 @@ export class Animation {
         this.getCurrentImage = getCurrentImage
     }
 
+    /**
+     * Function responsible for changing frame to the next frame if enough time has elapsed since the previous frame.
+     * @param gameTime - The current game time in milliseconds.
+     */
     animate(gameTime: number) {
         if (gameTime - this.animationFrameTime > ANIMATION_FRAME_SPEED_MS) {
             this.nextAnimationFrame(gameTime);
         }
     }
 
+    /**
+     * Fire callback and reset an animation.
+     */
     finishAnimation() {
         const animationCallback = this.getCallback();
-        this.currentAnimationFrame = 0;
+        this.reset()
 
         if (animationCallback) {
             animationCallback.apply(null);
@@ -66,10 +73,18 @@ export class Animation {
         return this.looping;
     }
 
+    /**
+     * @returns The callback function for animation completion, may be undefined.
+     */
     getCallback(): Function | undefined {
         return this.callback;
     }
 
+    /**
+     * Increase the current animation frame and pass the current image to the `getCurrentImage` function.
+     * If the animation isn't looping, then finish the animation instead.
+     * @param gameTime - The current game time in milliseconds.
+     */
     nextAnimationFrame(gameTime: number) {
         const animationImages = this.getImages();
 
@@ -86,6 +101,9 @@ export class Animation {
         this.currentAnimationFrame++;
     }
 
+    /**
+     * Reset current animation frame.
+     */
     reset() {
         this.currentAnimationFrame = 0
     }

@@ -36,20 +36,20 @@ quality of your code. We've provided the base code as a sample of what we expect
 ways the that the design and architecture could be better. If you find a better way to do something, by all means, make
 it better! Your solution can only gain from having a better foundation.
 
--   **Add a New Feature:**
+-   **~~Add a New Feature:~~**
 
-    Add in the ability for the skier to jump. The asset files for the ramp and the jumping skier are included. All you
-    need do is make them jump.
+    ~~Add in the ability for the skier to jump. The asset files for the ramp and the jumping skier are included. All you
+    need do is make them jump.~~
 
     Acceptance Criteria:
 
-    -   Jump ramps are added to the game world and appear randomly as the skier skis.
-    -   The skier should enter the jumping state when they hit the jump ramp.
-    -   The skier should also enter the jumping state when the user presses the spacebar.
-    -   The skier should do a flip while jumping, at least one cycle through the jump images provided.
-    -   While jumping, the skier should be able to jump over some obstacles:
-        -   Rocks can be jumped over
-        -   Trees can NOT be jumped over
+    -   ~~Jump ramps are added to the game world and appear randomly as the skier skis.~~
+    -   ~~The skier should enter the jumping state when they hit the jump ramp.~~
+    -   ~~The skier should also enter the jumping state when the user presses the spacebar.~~
+    -   ~~The skier should do a flip while jumping, at least one cycle through the jump images provided.~~
+    -   ~~While jumping, the skier should be able to jump over some obstacles:~~
+        -   ~~Rocks can be jumped over~~
+        -   ~~Trees can NOT be jumped over~~
 
 -   **Documentation:**
 
@@ -89,7 +89,39 @@ how creative candidates get with this.
 -   Provide a way to pause and resume the game
 -   Add a score that increments as the skier skis further
 -   Increase the difficulty the longer the skier skis (increase speed, increase obstacle frequency, etc.)
--   Deploy the game to a server so that we can play it without having to install it locally
--   Write unit tests for your code
+-   ~~Deploy the game to a server so that we can play it without having to install it locally~~
+-   ~~Write unit tests for your code~~
 
 We are looking forward to see what you come up with!!
+
+## Solution:
+
+I did my best to meet all requirements of the project and followed the current standard/structure of the project.
+
+## Changes Made
+- Implemented all required fields.
+- Refactored the Animation class to enable control over frame changes and added getter `getCurrentImage`.
+- Covered the Skier and Animation classes with unit tests `npm run test`.
+- The application is now deployed on Heroku. [SkiFree](https://skifree-db9f82ce386d.herokuapp.com/)
+
+## Pending Bonus Points
+Unfortunately, due to time constraints, I was unable to implement the following bonus points:
+-   Provide a way to reset the game once it's over
+-   Provide a way to pause and resume the game
+-   Add a score that increments as the skier skis further
+-   Increase the difficulty the longer the skier skis (increase speed, increase obstacle frequency, etc.)
+
+I would have loved to add these enhancements, but time did not permit.
+
+## BUGS / IMPROVEMENTS
+- Ensure that the skier has enough space when the game starts.
+- Be aware that there's a chance the Skier may spawn in a crashed state already intersecting with an obstacle when refreshing.
+- Rhino is chasing with really high speed, would be awesome to give a skier more time to ski.
+
+
+## How to Run:
+        npm install
+        npm run dev
+URL http://localhost:8080/
+
+Or check [Deployed Version](https://skifree-db9f82ce386d.herokuapp.com/)

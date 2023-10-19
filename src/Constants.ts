@@ -24,7 +24,7 @@ export enum IMAGE_NAMES {
     SKIER_JUMP3 = "skierJump3",
     SKIER_JUMP4 = "skierJump4",
     SKIER_JUMP5 = "skierJump5",
-    JUMP_RAMP = 'jumpRamp',
+    JUMP_RAMP = "jumpRamp",
     TREE = "tree",
     TREE_CLUSTER = "treeCluster",
     ROCK1 = "rock1",

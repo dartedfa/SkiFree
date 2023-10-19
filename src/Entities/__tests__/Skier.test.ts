@@ -84,7 +84,7 @@ describe("Skier", () => {
                 expect(skier.imageName).toBe(DIRECTION_IMAGES[DIRECTION_DOWN]);
             })
             test("Should avoid calling jump when skier is already in jumping state", () => {
-                jest.spyOn(skier, 'jump')
+                jest.spyOn(skier, "jump")
                 skier.handleInput(KEYS.SPACEBAR)
                 expect(skier.jump).not.toBeCalled()
             })

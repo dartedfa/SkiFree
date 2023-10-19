@@ -59,6 +59,9 @@ const IMAGES_JUMPING: IMAGE_NAMES[] = [
     IMAGE_NAMES.SKIER_JUMP5,
 ];
 
+/**
+ * The skier is the entity controlled by the player in the game.
+ */
 export class Skier extends Entity {
     /**
      * The name of the current image being displayed for the skier.
@@ -85,10 +88,14 @@ export class Skier extends Entity {
      */
     obstacleManager: ObstacleManager;
 
-    jumpAnimation = new Animation(IMAGES_JUMPING, false, this.setImageName.bind(this), this.land.bind(this))
+    /**
+     * The animation for the skier when jumping.
+     * @private
+     */
+    private jumpAnimation = new Animation(IMAGES_JUMPING, false, this.setImageName.bind(this), this.land.bind(this))
 
     /**
-     * Init the skier.
+     * Initializes the skier.
      */
     constructor(x: number, y: number, imageManager: ImageManager, obstacleManager: ObstacleManager, canvas: Canvas) {
         super(x, y, imageManager, canvas);
@@ -98,6 +105,7 @@ export class Skier extends Entity {
 
     /**
      * Is the skier currently in the crashed state
+     * @returns {boolean} True if the skier is crashed, false otherwise.
      */
     get isCrashed(): boolean {
         return this.state === STATES.STATE_CRASHED;
@@ -107,12 +115,17 @@ export class Skier extends Entity {
         return [STATES.STATE_SKIING, STATES.STATE_JUMPING].includes(this.state);
     }
 
+    /**
+     * Is the skier currently in the jumping state
+     * @returns {boolean} True if the skier is jumping, false otherwise.
+     */
     get isJumping(): boolean {
         return this.state === STATES.STATE_JUMPING;
     }
 
     /**
      * Is the skier currently in the dead state
+     * @returns {boolean} True if the skier is dead, false otherwise.
      */
     get isDead(): boolean {
         return this.state === STATES.STATE_DEAD;
@@ -120,13 +133,15 @@ export class Skier extends Entity {
 
     /**
      * Set the skier's image based upon the direction they're facing.
+     * @param {IMAGE_NAMES} imageName - The name of the image to set for the skier.
      */
     setImageName(imageName: IMAGE_NAMES) {
         this.imageName = imageName
     }
 
     /**
-     * Set the current direction the skier is facing and update the image accordingly
+     * Set the current direction the skier is facing and update the image accordingly.
+     * @param {number} direction - The direction to set for the skier.
      */
     setDirection(direction: number) {
         this.direction = direction;
@@ -142,6 +157,7 @@ export class Skier extends Entity {
 
     /**
      * Move the skier and check to see if they've hit an obstacle. The skier only moves in the skiing state.
+     * @param {number} gameTime - The current game time in milliseconds.
      */
     update(gameTime: number) {
         if (this.isMoving) {
@@ -233,9 +249,10 @@ export class Skier extends Entity {
     }
 
     /**
-     * Avoid Jumping if Skier is: Jumping, Standing, Crashed.
+     * Avoid jumping if the skier is already jumping, standing, or crashed.
+     * @returns {boolean} True if the skier can not jump, false otherwise.
      */
-    canNotJump() {
+    canNotJump(): boolean {
         return this.isJumping || [DIRECTION_LEFT, DIRECTION_RIGHT].includes(this.direction)
             || this.isCrashed;
     }
@@ -251,7 +268,7 @@ export class Skier extends Entity {
     }
 
     /**
-     * Land the skier down with last direction.
+     * Land the skier with last direction.
      */
     land() {
         this.state = STATES.STATE_SKIING
@@ -259,9 +276,11 @@ export class Skier extends Entity {
     }
 
     /**
-     * Handle keyboard input. If the skier is dead, don't handle any input.
+     * Handle keyboard input. If the skier is dead or jumping, don't handle any input.
+     * @param {string} inputKey - The input key to handle.
+     * @returns {boolean} True if the input was handled, false otherwise.
      */
-    handleInput(inputKey: string) {
+    handleInput(inputKey: string): boolean {
         if (this.isDead || this.isJumping) {
             return false;
         }
@@ -368,6 +387,10 @@ export class Skier extends Entity {
         );
     }
 
+    /**
+     * Define the action to take when the skier intersects with an obstacle.
+     * @param {Obstacle} obstacle - The obstacle the skier intersects with.
+     */
     intersectionAction(obstacle: Obstacle) {
         const obstacleName = obstacle.imageName
         switch (obstacleName) {
@@ -384,7 +407,7 @@ export class Skier extends Entity {
     }
 
     /**
-     * Go through all the obstacles in the game and see if the skier collides with any of them. If so, crash the skier.
+     * Go through all the obstacles and call intersectionAction with each obstacle.
      */
     checkIntersection() {
         const skierBounds = this.getBounds();

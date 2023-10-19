@@ -163,6 +163,10 @@ export class Rhino extends Entity {
         this.curAnimation = this.animations[this.state];
     }
 
+    /**
+     * Set imageName according to frame returned from current Animation
+     * @param {IMAGE_NAMES} imageName - The name of the image to set for Rhino.
+     */
     setImageName(imageName: IMAGE_NAMES) {
         this.imageName = imageName
     }
